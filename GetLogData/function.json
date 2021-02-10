@@ -1,0 +1,29 @@
+{
+  "scriptFile": "__init__.py",
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req",
+      "methods": [
+        "get"
+      ],
+      "route": "logs/{startdate}/{enddate}"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "$return"
+    }, 
+    {
+      "name": "logItems",
+      "type": "cosmosDB",
+      "direction": "in",
+      "databaseName": "funclogs",
+      "collectionName": "logs",
+      "sqlQuery": "SELECT * from logs c where c.timestamp > {startdate} and c.timestamp < {enddate}",
+      "connectionStringSetting": "CosmosDBConnection"
+    }
+  ]
+}
